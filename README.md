@@ -1,2 +1,2 @@
 # easy.fw
-Coletânea de Framework para facilitar a programação nas linguagens JavaScript e PHP
+Framework de fácil utilização com uma coletânea de funções para facilitar a programação nas linguagens JavaScript e PHP
