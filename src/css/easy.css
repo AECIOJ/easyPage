@@ -1,0 +1,33 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.cabecalho {
+    background-color: #f1f1f1;
+    padding: 20px;
+    text-align: center;
+}
+
+.menu {
+    overflow: hidden;
+    background-color: #333;
+    width: 100%;
+}
+
+.menu a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 10px 15px;
+    text-decoration: none;
+}
+
+.menu a:hover {
+    background-color: #ddd;
+    color: black;
+}
