@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html lang=”pt-br”>
+    <head>
+        <meta charset=”UTF-8”>
+        <link rel="stylesheet" type="text/css" href="src/css/easy.css">
+        
+        <script type="text/javascript" src="src/js/easy.js"></script>
+
+        <title>TESTE DO FRAMEWORK EASY</title>
+           
+        </script>    
+        
+    </head> 
+    
+    <body>
+
+        <script  type="text/javascript">
+            
+            let p = new Panel();
+            p.newHeader('TESTE');
+
+            let m = p.newNav();
+            m.adItem('CADASTRO','cadastro.php');
+            m.adItem('COMPRAS','compra.php');
+            m.adItem('VENDAS','venda.php');
+            m.adItem('FINANCEIRO','financeiro.php');
+            
+            p.newFooter('by Aécio & Alex - 2018');            p.show();                 
+
+        </script>    
+        
+    </body>
+</html>
+

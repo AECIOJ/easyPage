@@ -1,97 +1,86 @@
-/**
- *	easy.fw
- *	módulo: javascript
- *	
- *
- */
 
-
-class Elemento {
+class Element {
 
     constructor(tag){
         this.e = document.createElement(tag);        
     }
 
+    setClass(c){
+        this.e.className = c ;
+    }
+
+    setID(i){
+        this.e.id = i ;
+    }
+   
+    setType(t){
+        this.e.type = t ;
+    }
+    
     setVal(v){
         this.e.value = v ;
     }
 
-    setClasse(c){
-        this.e.className = c ;
-    }
-
-    setTipo(t){
-        this.e.type = t ;
-    }
-
-    setTexto(t){
+    setText(t){
         this.e.innerHTML = t;
     }
 
-    setAtrib(a,v){
+    setAttrib(a,v){
         this.e.setAttribute(a, v);
     }
-
     
-    setEvento(e,f){
+    setEvent(e,f){
         this.e.addEventListener(e, f);
     }
     
-    setEstilo(k,v){
+    setStyle(k,v){
         this.e.style[k] = v;    
     }
     
-    setEstilos(s){
+    setStyles(s){
         this.e.style = '';
         for (let k in s)
-            this.setEstilo(k,s[k]);
+            this.setStyle(k,s[k]);
     }
 
-    alinhaTexto(a){
+    setTextAlign(a){
         this.e.style.textAlign  = a;
     }
     
-    adEstilos(s){
+    adStyle(s){
         for (let k in s)
-            this.setEstilo(k,s[k]);
+            this.setStyle(k,s[k]);
     }
         
-    adElemento(o){
+    adElement(o){
         this.e.appendChild(o.e);
     }
 
-    adLink(titulo,destino='#'){
-        let a = this.criaElemento('a');
-        a.setTexto(titulo);
-        a.setAtrib('href', destino);
-        this.adElemento(a);
+    adLink(title,link='#'){
+        let a = this.newElement('a');
+        a.setText(title);
+        a.setAttrib('href', link);
+        this.adElement(a);
         return a;        
     }
     
-    adImagem(arquivo){
+    adImage(file){
         let i = document.createElement('img');
-        i.setAttribute('src',arquivo);
-        this.adElemento(i);
+        i.setAttribute('src',file);
+        this.adElement(i);
         return i;
     }
 
-    criaElemento(tag){
-        let e = new Elemento(tag);
-        this.adElemento(e);
+    newElement(tag){
+        let e = new Element(tag);
+        this.adElement(e);
         return e;        
     }
     
-    criaBotao(texto,evento){
-        let b = new Botao(texto,evento);
-        this.adElemento(b);
+    newButton(text,evento){
+        let b = new Button(text,evento);
+        this.adElement(b);
         return b;
-    }
-
-    criaParagrafo(texto){
-        let p = new Elemento('p');
-        p.setTexto(texto);
-        this.adElemento(p);
-        return p;  
     }
 
     show(){
@@ -99,88 +88,107 @@ class Elemento {
     }
 }
 
-class Imagem extends Elemento {    
-    constructor(arquivo){
+class Image extends Element {    
+    constructor(file){
         super('img');
-        this.e.setAttribute('src',arquivo)
-        this.setClass('Imagem');
+        this.e.setAttribute('src',file)
+        this.setClass('Image');
     }
 }
 
-class Botao extends Elemento {    
+class Button extends Element {    
     constructor(texto,evento){
         super('button');
-        this.setTexto(texto);
-        this.setEvento('click',evento);
+        this.setText(texto);
+        this.setEvent('click',evento);
     }    
 }
 
-class Div extends Elemento {    
+class Div extends Element {    
     constructor(classe = ''){
         super('div');
-        this.setClasse(classe);
+        this.setClass(classe);
     }
 }
 
-class Cabecalho extends Elemento {
+class Header extends Element {
     constructor(texto = ''){
         super('header');
-        this.setTexto(texto);
-        this.setClasse('cabecalho');
+        this.setText(texto);
     }
 }
 
-class Menu extends Elemento {
-    constructor(classe = 'menu'){
+class Section extends Element {
+    constructor(texto = ''){
+        super('section');
+        this.setText(texto);
+    }
+}
+
+class Aside extends Element {
+    constructor(texto = ''){
+        super('aside');
+        this.setText(texto);
+    }
+}
+
+class Article extends Element {
+    constructor(texto = ''){
+        super('article');
+        this.setText(texto);
+    }
+}
+
+class Footer extends Element {
+    constructor(texto = ''){
+        super('footer');
+        this.setText(texto);
+    }
+}
+
+class Nav extends Element {
+    constructor(classe = 'nav'){
         super('nav');
-        this.itens = this.criaElemento('ul');
-        this.setClasse(classe);
+        this.setClass(classe);
+        this.itens = this.newElement('ul');
     }
     
-    adItem(texto,destino){
-        let l = this.itens.criaElemento('li');
-        l.adLink(texto,destino);
+    adItem(text,link){
+        let l = this.itens.newElement('li');
+        l.adLink(text,link);
         return l;
     }
 }
 
-
-class Sessao extends Elemento {    
-    constructor(classe = 'sessao'){
-        super('section');
-        this.setClasse(classe);
-    }
-
-    criaCabecalho(texto=''){
-        this.cabecalho = new Cabecalho(texto);
-        this.adElemento(this.cabecalho);
-        return this.cabecalho;
-    }
-
-}
-
-class Pagina extends Div {    
-    constructor(classe = 'pagina'){
+class Panel extends Div {    
+    constructor(classe = 'Panel'){
         super();
-        this.setClasse(classe);
+        this.setClass(classe);
     }
 
-    criaCabecalho(texto=''){
-        let c = new Cabecalho(texto);
-        this.adElemento(c);
+    newHeader(texto=''){
+        let c = new Header(texto);
+        this.adElement(c);
         return c;
     }
 
-    criaMenu(classe='menu'){
-        let m = new Menu(classe);
-        this.adElemento(m);
+
+    newNav(classe='nav'){
+        let m = new Nav(classe);
+        this.adElement(m);
         return m;        
     }
 
-    criaSessao(texto=''){
-        let c = new Sessao(texto);
-        this.adElemento(c);
-        return c;
+    newSection(texto=''){
+        let s = new Section(texto);
+        this.adElement(s);
+        return s;
+    }
+
+    newFooter(texto=''){
+        let f = new Footer(texto);
+        this.adElement(f);
+        return f;
     }
     
 }
