@@ -7,34 +7,12 @@ body {
 }
 
 header {
-    background-color: #f1f1f1;
+    background-color:navy;
     padding: 20px;
+    color: #fff;
+    font-size: 2em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
-}
-
-nav {
-    overflow: hidden;
-    background-color: #333;
-    width: 100%;
-    height: 40px;
-}
-
-nav li {
-    list-style: none;   
-}
-
-nav a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 1px 10px;
-    text-decoration: none;
-}
-
-nav a:hover {
-    background-color: #ddd;
-    color: black;
 }
 
 footer {
@@ -46,4 +24,67 @@ footer {
     background-color: red;
     color: white;
     text-align: center;
+}
+
+/*Strip the ul of padding and list styling*/
+ul {
+    list-style-type:none;
+    margin:0;
+    padding:0;
+    position: absolute;
+}
+
+/*Create a horizontal list with spacing*/
+li {
+    display:inline-block;
+    margin-right: 1px;
+}
+
+/*Style for menu links*/
+li a {
+    display:block;
+    min-width:140px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #fff;
+    background: #2f3036;
+    text-decoration: none;
+}
+/*Hover state for top level links*/
+li:hover a {
+    background: #19c589;
+}
+/*Style for dropdown links*/
+li:hover ul a {
+    background: #f3f3f3;
+    color: #2f3036;
+    height: 40px;
+    line-height: 40px;
+}
+/*Hover state for dropdown links*/
+li:hover ul a:hover {
+    background: #19c589;
+    color: #fff;
+}
+
+/*Hide dropdown links until they are needed*/
+li ul {
+    display: none;
+}
+/*Make dropdown links vertical*/
+li ul li {
+    display: block;
+    float: none;
+}
+/*Prevent text wrapping*/
+li ul li a {
+    width: auto;
+    min-width: 100px;
+    padding: 0 20px;
+}
+/*Display the dropdown on hover*/
+ul li a:hover + .sub-menu, .sub-menu:hover {
+    display: block;
 }

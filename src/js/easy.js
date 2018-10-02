@@ -1,8 +1,14 @@
+window.onload = function() {
+    var p = new Panel();
+    initPage(p);
+    p.show();
+};
+
 
 class Element {
 
-    constructor(tag){
-        this.e = document.createElement(tag);        
+    constructor(vtag){
+        this.e = document.createElement(vtag);        
     }
 
     setClass(c){
@@ -47,39 +53,39 @@ class Element {
         this.e.style.textAlign  = a;
     }
     
-    adStyle(s){
+    addStyle(s){
         for (let k in s)
             this.setStyle(k,s[k]);
     }
         
-    adElement(o){
+    addElement(o){
         this.e.appendChild(o.e);
     }
 
-    adLink(title,link='#'){
-        let a = this.newElement('a');
+    addLink(title,link='#'){
+        let a = this.createElement('a');
         a.setText(title);
         a.setAttrib('href', link);
-        this.adElement(a);
+        this.addElement(a);
         return a;        
     }
     
-    adImage(file){
+    addImage(vfile){
         let i = document.createElement('img');
-        i.setAttribute('src',file);
-        this.adElement(i);
+        i.setAttribute('src',vfile);
+        this.addElement(i);
         return i;
     }
 
-    newElement(tag){
-        let e = new Element(tag);
-        this.adElement(e);
+    createElement(vtag){
+        let e = new Element(vtag);
+        this.addElement(e);
         return e;        
     }
     
-    newButton(text,evento){
-        let b = new Button(text,evento);
-        this.adElement(b);
+    createButton(title,eclick){
+        let b = new Button(title,eclick);
+        this.addElement(b);
         return b;
     }
 
@@ -89,106 +95,163 @@ class Element {
 }
 
 class Image extends Element {    
-    constructor(file){
+    constructor(vfile){
         super('img');
-        this.e.setAttribute('src',file)
+        this.e.setAttribute('src',vfile)
         this.setClass('Image');
     }
 }
 
 class Button extends Element {    
-    constructor(texto,evento){
+    constructor(title,eclick){
         super('button');
-        this.setText(texto);
-        this.setEvent('click',evento);
+        this.setText(title);
+        this.setEvent('click',eclick);
     }    
 }
 
 class Div extends Element {    
-    constructor(classe = ''){
+    constructor(nclass = ''){
         super('div');
-        this.setClass(classe);
+        this.setClass(nclass);
     }
 }
 
 class Header extends Element {
-    constructor(texto = ''){
+    constructor(text = ''){
         super('header');
-        this.setText(texto);
+        this.setText(text);
     }
 }
 
 class Section extends Element {
-    constructor(texto = ''){
+    constructor(text = ''){
         super('section');
-        this.setText(texto);
+        this.setText(text);
     }
 }
 
 class Aside extends Element {
-    constructor(texto = ''){
+    constructor(text = ''){
         super('aside');
-        this.setText(texto);
+        this.setText(text);
     }
 }
 
 class Article extends Element {
-    constructor(texto = ''){
+    constructor(text = ''){
         super('article');
-        this.setText(texto);
+        this.setText(text);
     }
 }
 
 class Footer extends Element {
-    constructor(texto = ''){
+    constructor(text = ''){
         super('footer');
-        this.setText(texto);
+        this.setText(text);
     }
 }
 
-class Nav extends Element {
-    constructor(classe = 'nav'){
-        super('nav');
-        this.setClass(classe);
-        this.itens = this.newElement('ul');
+
+class List extends Element {
+    constructor(tag = 'ul'){
+        super(tag);
     }
-    
-    adItem(text,link){
-        let l = this.itens.newElement('li');
-        l.adLink(text,link);
-        return l;
+    addItem(text){
+        let i = new ListItem(text);
+        this.addElement(i);
+        return i;
+    }
+    addItems(items){
+        for(var k in items) {
+            this.addItem(items[k]);
+        }
+        return this;
     }
 }
+
+
+class ListItem extends List {
+    constructor(text){
+        super('li');
+        this.setText(text);
+    }
+}
+
+class Menu extends Element {
+    constructor(tag = 'ul'){
+        super(tag);
+    }
+    addItem(title,link='#'){
+        let i = new MenuItem(title,link);
+        this.addElement(i);
+        return i;
+    }
+    addItems(links){
+        for(var k in links) {
+            this.addItem(k,links[k]);
+         }
+         return this;
+    }
+    createSubMenu(text){
+        let i = this.addItem(text);
+        this.addElement(i);
+        let s = new Menu();
+        s.setClass('sub-menu');
+        i.addElement(s);
+        return s;        
+    }
+}
+
+class MenuItem extends Menu {
+    constructor(text,link){
+        super('li');
+        this.addLink(text,link);
+    }
+}
+
 
 class Panel extends Div {    
-    constructor(classe = 'Panel'){
+    constructor(nclass = 'Panel'){
         super();
-        this.setClass(classe);
+        this.setClass(nclass);
     }
 
-    newHeader(texto=''){
-        let c = new Header(texto);
-        this.adElement(c);
+    createHeader(text=''){
+        let c = new Header(text);
+        this.addElement(c);
         return c;
     }
 
-
-    newNav(classe='nav'){
-        let m = new Nav(classe);
-        this.adElement(m);
+    createNav(){
+        let n = new Element('nav');        
+        n.setClass('menu');
+        this.addElement(n);        
+        let m = new Menu();
+        m.setClass('menu-list');
+        n.addElement(m);
         return m;        
     }
 
-    newSection(texto=''){
-        let s = new Section(texto);
-        this.adElement(s);
+    createMenu(){
+        let m = new Menu();
+        this.addElement(m);
+        return m;        
+    }
+
+    createSection(text=''){
+        let s = new Section(text);
+        this.addElement(s);
         return s;
     }
 
-    newFooter(texto=''){
-        let f = new Footer(texto);
-        this.adElement(f);
+    createFooter(text=''){
+        let f = new Footer(text);
+        this.addElement(f);
         return f;
     }
     
 }
+
+
+
