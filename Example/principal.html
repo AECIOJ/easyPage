@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html lang=”pt-br”>
+    <head>
+        <meta charset=”UTF-8”>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="../src/css/easy.css">
+        
+        <script type="text/javascript" src="../src/js/easy.js"></script>
+
+        <title>TESTE DO FRAMEWORK EASY</title>
+           
+        <script  type="text/javascript">
+   
+            function initPage(p){           
+                p.createHeader('TESTE');
+                let m = p.createNav();
+                m.addItem('Home');
+                let s = m.createSubMenu('Serviços');
+                s.addItems({
+                    'Criação de Sites':'criacao.php',
+                    'Hospedagem':'hospedagem.php',
+                    'Outros':'outros.php'
+                });
+                s = m.createSubMenu('Cursos');
+                s.addItems({
+                    'PHP':'php.php',
+                    'JAVA':'java.php',
+                    'HTML5':'html5.php'
+                });
+                p.createFooter('by Aécio & Alex - 2018');         
+            }
+
+        </script>    
+        
+    </head> 
+    
+    <body>
+
+    </body>
+</html>
+

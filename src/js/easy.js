@@ -5,25 +5,49 @@ window.onload = function() {
 };
 
 
-class Element {
+function empty(str){
+    return (str === "");
+}
+
+class HElement {
 
     constructor(vtag){
         this.e = document.createElement(vtag);        
+    }
+
+    getElement(){
+        return this.e;
     }
 
     setClass(c){
         this.e.className = c ;
     }
 
+    getClass(){
+        return this.e.className;
+    }
+    
     setID(i){
         this.e.id = i ;
     }
-   
+
+    getID(){
+        return this.e.id;
+    }
+    
+    setName(n){
+        this.e.name = n ;
+    }
+
+    getName(){
+        return this.e.name;
+    }
+
     setType(t){
         this.e.type = t ;
     }
     
-    setVal(v){
+    setValue(v){
         this.e.value = v ;
     }
 
@@ -31,35 +55,41 @@ class Element {
         this.e.innerHTML = t;
     }
 
-    setAttrib(a,v){
-        this.e.setAttribute(a, v);
+    setAttrib(atr,val=''){
+        if (empty(val))
+            this.e.removeAttribute(atr);
+        else
+            this.e.setAttribute(atr,val);    
     }
+
+    addAttrib(atr){
+        this.e.setAttribute(atr);    
+    }
+  
     
     setEvent(e,f){
         this.e.addEventListener(e, f);
     }
     
-    setStyle(k,v){
-        this.e.style[k] = v;    
+    addStyle(s){
+        for (let k in s)
+           this.e.style[k] = s[k];         
     }
     
-    setStyles(s){
-        this.e.style = '';
-        for (let k in s)
-            this.setStyle(k,s[k]);
+    setStyle(s){
+        Object.assign(this.e.style,s);
     }
 
     setTextAlign(a){
         this.e.style.textAlign  = a;
     }
-    
-    addStyle(s){
-        for (let k in s)
-            this.setStyle(k,s[k]);
-    }
-        
+            
     addElement(o){
         this.e.appendChild(o.e);
+    }
+
+    insertBefore(o){
+        this.e.insertAdjacentElement('beforebegin',o.getElement());
     }
 
     addLink(title,link='#'){
@@ -78,7 +108,7 @@ class Element {
     }
 
     createElement(vtag){
-        let e = new Element(vtag);
+        let e = new HElement(vtag);
         this.addElement(e);
         return e;        
     }
@@ -89,12 +119,19 @@ class Element {
         return b;
     }
 
+    createHx(text,x=1){
+        let h = new HElement('h'+x);
+        h.setText(text);
+        this.addElement(h);
+        return h;
+    }
+
     show(){
         document.body.appendChild(this.e);
     }
 }
 
-class Image extends Element {    
+class Image extends HElement {    
     constructor(vfile){
         super('img');
         this.e.setAttribute('src',vfile)
@@ -102,7 +139,7 @@ class Image extends Element {
     }
 }
 
-class Button extends Element {    
+class Button extends HElement {    
     constructor(title,eclick){
         super('button');
         this.setText(title);
@@ -110,42 +147,42 @@ class Button extends Element {
     }    
 }
 
-class Div extends Element {    
+class Div extends HElement {    
     constructor(nclass = ''){
         super('div');
         this.setClass(nclass);
     }
 }
 
-class Header extends Element {
+class Header extends HElement {
     constructor(text = ''){
         super('header');
         this.setText(text);
     }
 }
 
-class Section extends Element {
+class Section extends HElement {
     constructor(text = ''){
         super('section');
         this.setText(text);
     }
 }
 
-class Aside extends Element {
+class Aside extends HElement {
     constructor(text = ''){
         super('aside');
         this.setText(text);
     }
 }
 
-class Article extends Element {
+class Article extends HElement {
     constructor(text = ''){
         super('article');
         this.setText(text);
     }
 }
 
-class Footer extends Element {
+class Footer extends HElement {
     constructor(text = ''){
         super('footer');
         this.setText(text);
@@ -153,7 +190,7 @@ class Footer extends Element {
 }
 
 
-class List extends Element {
+class List extends HElement {
     constructor(tag = 'ul'){
         super(tag);
     }
@@ -178,7 +215,7 @@ class ListItem extends List {
     }
 }
 
-class Menu extends Element {
+class Menu extends HElement {
     constructor(tag = 'ul'){
         super(tag);
     }
@@ -193,6 +230,7 @@ class Menu extends Element {
          }
          return this;
     }
+
     createSubMenu(text){
         let i = this.addItem(text);
         this.addElement(i);
@@ -224,7 +262,7 @@ class Panel extends Div {
     }
 
     createNav(){
-        let n = new Element('nav');        
+        let n = new HElement('nav');        
         n.setClass('menu');
         this.addElement(n);        
         let m = new Menu();
@@ -251,7 +289,126 @@ class Panel extends Div {
         return f;
     }
     
+    createForm(action='#'){
+        let f = new Form(action);
+        this.addElement(f);
+        return f;
+    }
 }
 
 
+class InputText extends HElement  {
+    constructor(name,placeholder=''){
+        super('input');
+        this.setClass('input');
+        this.setType('text');
+        this.setName(name);
+        this.setID(name);
+        this.setPlaceHolder(placeholder);
+    }
+
+    createLabel(label){
+        let l = new HElement('label');
+        l.setAttrib('for',this.getID);
+        l.setText(label);
+        this.insertBefore(l);
+        return l;
+    }
+
+    setPlaceHolder(ph){
+        if (!empty(ph))
+            this.setAttrib('placeholder',ph);
+    }
+    setRequired(ok=true){
+        if (ok)
+            this.setAttrib('required','required');
+        else        
+            this.setAttrib('required');        
+    }
+
+}
+
+class Select extends HElement {
+    constructor(name){
+        super('select');
+        this.setName(name);
+        this.setID(name);
+    }
+    addItem(value,text,selected=false){
+        let o = new HElement('option');
+        o.setValue(value);
+        o.setText(text);
+        if (selected)
+            o.addAttrib('selected');
+        this.addElement(o);
+        return this;
+    }
+    addItems(items){
+        for(var k in items) {
+            this.addItem(k,items[k]);
+        }
+        return this;
+    }
+    createLabel(label){
+        let l = new HElement('label');
+        l.setAttrib('for',this.getID);
+        l.setText(label);
+        this.insertBefore(l);
+        return l;
+    }
+
+
+}
+
+class Form extends HElement {
+    constructor(action = '#'){
+        super('form');
+        this.setClass('form');
+        this.setMethod();
+    }
+
+    setMethod( m = 'post'){
+        this.setAttrib('method',m);
+    }
+
+    createInputText(name,placeholder=''){
+        let i = new InputText(name);
+        if (!empty(placeholder))
+            i.setPlaceHolder(placeholder);
+        this.addElement(i);
+        return i;
+    }
+
+    createInputPass(name,placeholder=''){
+        let i = new InputText(name);
+        i.setType('password');
+        if (!empty(placeholder))
+            i.setPlaceHolder(placeholder);
+        this.addElement(i);
+        return i;
+    }
+
+    createInputNumber(name,placeholder=''){
+        let i = new InputText(name);
+        i.setType('number');
+        if (!empty(placeholder))
+            i.setPlaceHolder(placeholder);
+        this.addElement(i);
+    }
+
+    createSubmit(name,text='ENVIAR'){
+        let b = new InputText(name);
+        b.setType('submit');      
+        b.setValue(text);
+        this.addElement(b);        
+        return b;
+    }
+
+    createSelect(name){
+        let s = new Select(name);
+        this.addElement(s);
+        return s;
+    }
+
+}
 

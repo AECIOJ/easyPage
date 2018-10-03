@@ -12,23 +12,30 @@
            
         <script  type="text/javascript">
    
-            function initPage(p){
-                p.createHeader('TESTE');
-                let m = p.createNav();
-                m.addItem('Home');
-                let s = m.createSubMenu('Serviços');
-                s.addItems({
-                    'Criação de Sites':'criacao.php',
-                    'Hospedagem':'hospedagem.php',
-                    'Outros':'outros.php'
+            function initPage(p){           
+ 
+                let f = p.createForm('acesso.php');
+ 
+                f.createHx('LOGIN');    
+ 
+                f.createInputText('usuario','Digite o nome do Usuário').createLabel('Usuário');
+                
+                f.createInputPass('senha','Digite a senha').createLabel('Senha');
+                
+                f.createSelect('Dep').addItems({
+                    'C':'Compras',
+                    'V':'Vendas',
+                    'E':'Estoques',
+                    'R':'Recepção',
+                    'X':'Expedição'
+                }).createLabel('Departamento');
+
+                f.createSubmit('bEntrar','ENTRAR');
+                
+                f.addStyle({
+                    width :  '50%',
+                    height : '50%'
                 });
-                s = m.createSubMenu('Cursos');
-                s.addItems({
-                    'PHP':'php.php',
-                    'JAVA':'java.php',
-                    'HTML5':'html5.php'
-                });
-                p.createFooter('by Aécio & Alex - 2018');         
             }
 
         </script>    
