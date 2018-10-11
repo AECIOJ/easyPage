@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang=”pt-br”>
+    <head>
+        <meta charset=”UTF-8”>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="../src/css/easypage.css">
+        <link rel="stylesheet" type="text/css" href="../src/css/easyform.css">
+        
+        <script type="text/javascript" src="../src/js/easypage.js"></script>
+        <script type="text/javascript" src="../src/js/easyvalidation.js"></script>
+
+        <title>TESTE DO FRAMEWORK EASY</title>
+           
+        <script  type="text/javascript">
+   
+            const LISTA_UF = {
+                'PA':'Pará',
+                'MG':'Minas Gerais',
+                'MA':'Maranhão',
+                'SE':'Sergipe',
+                'PI':'Piauí',
+                'RJ':'Rio de Janeiro'
+            }
+
+            let f = page.createForm('acesso.php');
+            
+            f.setTitle('EXEMPLO DE ENTRADA DE DADOS',3);    
+
+            f.createInputText('nome','Informe seu nome').createLabel('Nome').setRequired();
+
+            f.createInputType('cpf','cpf','Informe seu cpf').createLabel('Cpf');           
+            f.createInputType('date','nascimento','Informe data de nascimento').createLabel('Data Nascimento');           
+            f.createInputType('fone','Fone').createLabel('Telefone');      
+            f.createInputType('email','Email','Informe Email').createLabel('Email');
+
+            f.createSelect('UF').createLabel('Estado').addItems(LISTA_UF);
+
+            f.createSubmit('bEntrar','ENTRAR');
+            
+            f.addStyle({
+                width :  '50%',
+                height : '50%'
+            })
+
+        </script>    
+
+
+        
+    </head> 
+    
+    <body>
+
+    </body>
+</html>
+

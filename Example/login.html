@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang=”pt-br”>
+    <head>
+        <meta charset=”UTF-8”>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="../src/css/easypage.css">
+        <link rel="stylesheet" type="text/css" href="../src/css/easyform.css">
+        
+        <script type="text/javascript" src="../src/js/easypage.js"></script>
+        <script type="text/javascript" src="../src/js/easyvalidation.js"></script>
+
+        <title>TESTE DO FRAMEWORK EASY</title>
+           
+        <script  type="text/javascript">
+   
+            let f = page.createForm('acesso.php');
+
+            f.createHx('LOGIN');    
+
+            f.createInputText('usuario','Digite o nome do Usuário').
+                createLabel('Usuário');
+            
+            f.createInputType('password','senha','Digite a senha').
+                createLabel('Senha').
+                setValidate('validaPass','Erro na entrada de dados');
+
+            f.createSelect('Dep').addItems({
+                'C':'Compras',
+                'V':'Vendas',
+                'E':'Estoques',
+                'R':'Recepção',
+                'X':'Expedição'
+            }).createLabel('Departamento');
+
+            f.createSubmit('bEntrar','ENTRAR');
+            
+            f.addStyle({
+                width :  '50%',
+                height : '50%'
+            });
+
+            function validaPass(x){
+                if (x=='98789')
+                    return true
+                else
+                    return false;
+            }
+
+
+        </script>    
+
+
+        
+    </head> 
+    
+    <body>
+
+    </body>
+</html>
+
