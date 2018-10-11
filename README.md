@@ -1,2 +1,5 @@
 # easyPage
-Framework de fácil utilização com uma coletânea de classes e funções para facilitar a programação nas linguagens JavaScript e PHP
+A Javascript Framework for building easy applications using java or php code.
+
+
+ 
